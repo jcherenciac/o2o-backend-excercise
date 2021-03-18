@@ -47,10 +47,10 @@ class BeerService
     {
         $apiResult = $this->get($params);
         try {
-            $response = new JsonResponse('', $apiResult->getStatusCode());
+            $response = new JsonResponse('[]', $apiResult->getStatusCode());
             if ($apiResult->getStatusCode() === Response::HTTP_OK) {
                 $content = json_decode($apiResult->getContent(), true);
-                if (count($content) > 0) {
+                if (!empty($content) && !empty($arrayFieldsKeys)) {
                     $parsedContent = [];
                     foreach ($content as $item) {
                         $intersect = array_intersect_key($item, array_flip($arrayFieldsKeys)
